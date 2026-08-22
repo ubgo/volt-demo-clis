@@ -1,3 +1,6 @@
 ldflags:
   vars:
     main.version: "{{.Version}}"
+hooks:
+  pre_release: ./scripts/release-gate.sh
+  post_release: ./scripts/announce.sh
