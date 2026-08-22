@@ -4,8 +4,6 @@
 // shape for a submodule.
 package textutil
 
-import "strings"
-
 // Reverse returns s with its runes in reverse order.
 func Reverse(s string) string {
 	r := []rune(s)
