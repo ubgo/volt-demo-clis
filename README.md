@@ -42,4 +42,24 @@ hooks:
   post_release: ./scripts/announce.sh       # after publish+verify — cannot un-release
 ```
 
-Try the gate: `RELEASE_BLOCKED=1 volt release ./cmd/notes --bump patch` refuses with zero tags created; `volt release --from-tag notes/vX.Y.Z` skips the gate (the tag already exists) but still runs `post_release`.
+The gate is an ordinary script — it refuses by exiting non-zero. `RELEASE_BLOCKED` is this script's own convention (hooks inherit the caller's env; volt only runs the script and honors its exit code):
+
+```sh
+# scripts/release-gate.sh (pre_release)
+if [ "$RELEASE_BLOCKED" = "1" ]; then
+  echo "gate: releases are blocked (RELEASE_BLOCKED=1) — refusing $VOLT_TAG" >&2
+  exit 1
+fi
+echo "gate: ok — $VOLT_TAG ($VOLT_KIND at $VOLT_DIR)"
+```
+
+Try it:
+
+```sh
+$ RELEASE_BLOCKED=1 volt release ./cmd/notes --bump patch
+hook pre_release: ./scripts/release-gate.sh
+gate: releases are blocked (RELEASE_BLOCKED=1) — refusing notes/v0.2.1
+Error: pre_release hook refused the release — nothing was tagged
+```
+
+`volt release --from-tag notes/vX.Y.Z` skips the gate (the tag already exists — nothing left to prevent) but still runs `post_release`; that is the CI republish path, so `post_release` output shows up in the release workflow's Actions log while `pre_release` only ever prints on the machine where a human runs `volt release`.
