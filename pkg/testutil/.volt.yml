@@ -1,0 +1,4 @@
+# Never released: test helpers shared by this repo's own suites. Hidden from
+# volt status, refused by volt release, invisible to tag resolution — the
+# demo's permanent example of the `internal: true` marker.
+internal: true
