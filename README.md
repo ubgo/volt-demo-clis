@@ -30,3 +30,16 @@ internal: true    # applies to this directory and everything under it
 ```
 
 Released with `volt release ./cmd/notes v0.1.0` etc. Doubles as a regression fixture for volt.
+
+## Release hooks — `cmd/notes`
+
+The notes stream demos volt's project-owned hooks: `.volt.yml` names two shell scripts, volt runs them around the release with `VOLT_TAG` / `VOLT_VERSION` / `VOLT_DIR` / `VOLT_BINARY` / `VOLT_KIND` / `VOLT_DIST` in the environment and the repo root as cwd.
+
+```yaml
+# cmd/notes/.volt.yml
+hooks:
+  pre_release: ./scripts/release-gate.sh    # after tests, BEFORE the tag — non-zero aborts with nothing created
+  post_release: ./scripts/announce.sh       # after publish+verify — cannot un-release
+```
+
+Try the gate: `RELEASE_BLOCKED=1 volt release ./cmd/notes --bump patch` refuses with zero tags created; `volt release --from-tag notes/vX.Y.Z` skips the gate (the tag already exists) but still runs `post_release`.
