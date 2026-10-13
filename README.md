@@ -1,6 +1,6 @@
 # volt-demo-clis
 
-The **monorepo + mixed** demo for [volt](https://github.com/khanakia/voltkit): two CLIs with independent version streams, a nested importable library, and shared internal code — one repo, one pipeline.
+The **monorepo + mixed** demo for [volt](https://github.com/ubgo/voltkit): two CLIs with independent version streams, a nested importable library, and shared internal code — one repo, one pipeline.
 
 | Directory | Kind | Tag stream |
 |---|---|---|

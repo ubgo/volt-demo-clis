@@ -6,7 +6,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/khanakia/volt-demo-clis/internal/shared"
+	"github.com/ubgo/volt-demo-clis/internal/shared"
 )
 
 var version = "dev" // stamped via cmd/notes/.volt.yml

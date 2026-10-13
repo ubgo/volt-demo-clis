@@ -1,3 +1,3 @@
-module github.com/khanakia/volt-demo-clis/pkg/mathx
+module github.com/ubgo/volt-demo-clis/pkg/mathx
 
 go 1.22
